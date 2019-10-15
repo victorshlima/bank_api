@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface ContaDao {
 
-
     List<ContaCorrente> findAll() ;
 
     ContaCorrente findAccount(int agencia, int conta) ;

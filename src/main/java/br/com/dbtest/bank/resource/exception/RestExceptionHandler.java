@@ -1,10 +1,9 @@
 package br.com.dbtest.bank.resource.exception;
 
 
-import br.com.dbtest.bank.Exception.IdNaoValidoServiceException;
-import br.com.dbtest.bank.Exception.NaoExisteDaoException;
+import br.com.dbtest.bank.Exception.InvalidIdServiceException;
+import br.com.dbtest.bank.Exception.NotExistDaoException;
 import br.com.dbtest.bank.domain.DetalheErro;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,8 +73,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 request);  //referente ao webrequest da assinatura do metodo
     }
 
-    @ExceptionHandler({NaoExisteDaoException.class})
-    public ResponseEntity<Object> entidadeNaoEncontrada(NaoExisteDaoException ex, WebRequest request) {
+    @ExceptionHandler({NotExistDaoException.class})
+    public ResponseEntity<Object> entidadeNaoEncontrada(NotExistDaoException ex, WebRequest request) {
 
         return handleExceptionInternal(
                 ex, DetalheErro.builder()
@@ -91,8 +90,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    @ExceptionHandler({IdNaoValidoServiceException.class})
-    public ResponseEntity<Object> entidadeNaoEncontrada(IdNaoValidoServiceException ex, WebRequest request) {
+    @ExceptionHandler({InvalidIdServiceException.class})
+    public ResponseEntity<Object> entidadeNaoEncontrada(InvalidIdServiceException ex, WebRequest request) {
 
         return handleExceptionInternal(
                 ex, DetalheErro.builder()

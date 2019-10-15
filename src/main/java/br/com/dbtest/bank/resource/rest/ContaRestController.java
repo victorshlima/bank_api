@@ -40,7 +40,6 @@ public class ContaRestController {
         // CREATED HTTP STATUS 201
         //build envia um http status com response entity
     }
-
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ContaCorrente> listar() {

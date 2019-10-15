@@ -34,7 +34,6 @@ public class LancamentoDaoImpl implements LancamentoDao {
     @Override
     public List<Lancamento> findAll() {
         return entityManager
-                // .createQuery("select c from ContaCorrente c", ContaCorrente.class)
                 .createQuery("select l from Lancamento l", Lancamento.class)
                 .getResultList();
     }

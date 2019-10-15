@@ -38,10 +38,6 @@ public class ContaCorrente implements Serializable {
 
     @Column( nullable = false)
     private String tipo;
-    // colcoar enuns para os tipos de contas
-    // @Column( nullable = false)
-    private String data;
-    //INSERIR A DATA DA TRANS E ID da TRANS
 
     public Long getId() {
         return id;

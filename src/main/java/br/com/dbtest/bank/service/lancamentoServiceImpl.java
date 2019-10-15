@@ -20,11 +20,9 @@ public class lancamentoServiceImpl implements LancamentoService  {
     @Override
     public Lancamento lancamento(Lancamento lancamento) {
 
-
         System.out.println( "Etapa 1"+ "\n");
          validaAgenciaConta( lancamento.getAgenciaOrig(), lancamento.getContaOrig() );
          validaAgenciaConta( lancamento.getAgenciaDest(), lancamento.getContaDest() );
-
 
     if (  veficaSaldo(contaDao.findAccount(lancamento.getAgenciaOrig(),lancamento.getContaOrig()  ) , lancamento.getValor()) ){
         System.out.println( "veficaSaldo"+ "\n");
@@ -43,8 +41,6 @@ public class lancamentoServiceImpl implements LancamentoService  {
     }else {
         System.out.println( "ERRO tranfere"+ "\n");
     }
-
-
         System.out.println( "Etapa 3"+ "\n");
    if ( contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaDest(),lancamento.getContaDest()  ),  +lancamento.getLimite())){
 
@@ -58,11 +54,11 @@ public class lancamentoServiceImpl implements LancamentoService  {
    // TESTE
         lancamento.setStatus("EFETUADA");
         lancamentoDao.save(lancamento);
-        lancamento   =  lancamentoDao.findLancamento(lancamento.getId());
-        System.out.println( lancamento.toString() +  " Persistencia");
-        System.out.println( lancamentoDao.findAll().get(0).toString() +  " Persistencia");
+        Lancamento l = lancamentoDao.findLancamento(lancamento.getId());
+        System.out.println(l.toString() + " Persistencia");
 
-        Lancamento l= lancamentoDao.findAll().get(0);
+
+
         System.out.println( l.toString());
     return l;
     }

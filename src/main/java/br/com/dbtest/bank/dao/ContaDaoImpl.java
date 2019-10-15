@@ -35,12 +35,10 @@ public class ContaDaoImpl implements ContaDao {
         return true;
     }
 
-
     @Override
     public List<ContaCorrente> findAll() {
         return entityManager
                 .createQuery("select c from ContaCorrente c", ContaCorrente.class)
-                // .createQuery("select c from ContaCorrente c where agencia =1000 and conta =1", ContaCorrente.class)
                 .getResultList();
     }
 
@@ -48,7 +46,6 @@ public class ContaDaoImpl implements ContaDao {
     public ContaCorrente findAccount(int agencia, int conta) {
         return entityManager
                 .createQuery("select c from ContaCorrente c where agencia =" + agencia + " and conta =" + conta, ContaCorrente.class)
-                //   .createQuery("select c from ContaCorrente c where agencia =1000 and conta =1", ContaCorrente.class)
                 .getSingleResult();
     }
 
