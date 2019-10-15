@@ -16,12 +16,9 @@ import java.util.Objects;
 
         })
 
-
 @JsonFormat
 @JsonAutoDetect
 public class ContaCorrente implements Serializable {
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -35,20 +35,6 @@ public class ContaDaoImpl implements ContaDao {
         return true;
     }
 
-    @Override
-    public double saldo(int agencia, int conta) {
-        //  throw new NaoExisteDaoException("ContaCorrente" + agencia + conta +" não encontrada" );
-        return 000.00;
-    }
-
-
-
-    @Override
-    public ContaCorrente getConta() {
-        return entityManager
-                .createQuery("select c from ContaCorrente c", ContaCorrente.class)
-                .getSingleResult();
-    }
 
     @Override
     public List<ContaCorrente> findAll() {

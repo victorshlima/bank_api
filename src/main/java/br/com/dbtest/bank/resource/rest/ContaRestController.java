@@ -1,4 +1,5 @@
 package br.com.dbtest.bank.resource.rest;
+
 import br.com.dbtest.bank.domain.ContaCorrente;
 import br.com.dbtest.bank.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.List;
 
@@ -23,8 +25,6 @@ public class ContaRestController {
     @Autowired
     private ContaService contaService;
 
-
-
     @PostMapping  //  HTTP STATUS 201 CREATED
     //NAO vamos retorno um objeto curso mas ism um corpo vazio na resposta
     //No cabeção será inserio a localizado do objeto inseriso no banco
@@ -40,36 +40,11 @@ public class ContaRestController {
         // CREATED HTTP STATUS 201
         //build envia um http status com response entity
     }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ContaCorrente> listar() {
-
         return contaService.findAll();
-    }
-
-    @PatchMapping("/findaccount")
-    @ResponseStatus(HttpStatus.OK)
-    public ContaCorrente listar1(@RequestParam("agenciaOrig") int agenciaOrig,
-                                 @RequestParam("contaOrig") int contaOrig,
-                                 @RequestParam("agenciaDest") int agenciaDest,
-                                 @RequestParam("contaDest") int contaDest,
-                                 @RequestParam("valor") double valor,
-                                 @RequestParam("tipo") String tipo)
-    {
-        return contaService.lancamento(agenciaOrig,contaOrig, agenciaDest, contaDest, valor, tipo  );
-
-    }
-    @GetMapping("/findaccount")
-    @ResponseStatus(HttpStatus.OK)
-    public ContaCorrente listar2(@RequestParam("agenciaOrig") int agenciaOrig,
-                                 @RequestParam("contaOrig") int contaOrig,
-                                 @RequestParam("agenciaDest") int agenciaDest,
-                                 @RequestParam("contaDest") int contaDest,
-                                 @RequestParam("valor") double valor,
-                                 @RequestParam("tipo") String tipo)
-    {
-        return contaService.lancamento(agenciaOrig,contaOrig, agenciaDest, contaDest, valor, tipo  );
-
     }
 
 }

@@ -10,24 +10,12 @@ import java.util.List;
 public interface ContaDao {
 
 
-
-
-
-
-
-    double saldo (int agencia, int conta);
-
-
-    ContaCorrente getConta ();
-
     List<ContaCorrente> findAll() ;
-
 
     ContaCorrente findAccount(int agencia, int conta) ;
 
     void save (ContaCorrente conta);
 
     boolean tranfere(ContaCorrente conta, Double valor);
-
 
 }

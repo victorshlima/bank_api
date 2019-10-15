@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface LancamentoDao {
 
-
     Lancamento findLancamento(Long id) ;
 
     void save(Lancamento lancamento);

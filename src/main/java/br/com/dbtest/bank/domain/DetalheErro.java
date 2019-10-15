@@ -25,9 +25,6 @@ public class DetalheErro implements Serializable {
 
     private String path; // retorna a URL
 
-
-
-
     public int getStatusCode() {
         return statusCode;
     }

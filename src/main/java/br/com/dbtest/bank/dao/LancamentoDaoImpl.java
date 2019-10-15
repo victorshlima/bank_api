@@ -18,7 +18,6 @@ public class LancamentoDaoImpl implements LancamentoDao {
     @Autowired
     private LancamentoDao lancamentoDao;
 
-
     @Override
     public Lancamento findLancamento(Long id) {
             return entityManager
@@ -31,7 +30,6 @@ public class LancamentoDaoImpl implements LancamentoDao {
 
         entityManager.persist(lancamento);
     }
-
 
     @Override
     public List<Lancamento> findAll() {

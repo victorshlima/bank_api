@@ -17,8 +17,8 @@ public class SpringJpaConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
- ds.setUrl("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'D:\\\\development\\\\GitHubProjects\\\\devMediaSpring\\\\FONTE_CURSO_SPRING_JPA_02_MBPOO\\\\intro-spring-rest\\\\src\\\\main\\\\resources\\\\scripts\\\\ini.sql'");
-            return ds;
+        ds.setUrl("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
+        return ds;
     }
 
     @Bean
