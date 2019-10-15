@@ -10,9 +10,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "contacorrente"
         ,        indexes = { @Index(
-                columnList = "agencia, conta, id",
+        columnList = "agencia, conta",
                 unique = true,
-                name = "unique_agencia_conta_id")
+        name = "unique_agencia_conta")
 
         })
 

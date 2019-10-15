@@ -11,41 +11,24 @@ import org.junit.jupiter.api.DisplayName;
 import static io.restassured.RestAssured.given;
 
 public class TestRequest   {
+
+    private static TestFiles f = new TestFiles();
+
       @BeforeClass
       public static void init()   {
           RestAssured.baseURI = "http://localhost";
           RestAssured.port = 8080;
       }
-    private static String payload1 = "{\n" +
-            "\"agencia\" : \"1\",\n" +
-            "\"conta\" : \"1\",\n" +
-            "\"saldo\" : \"2000\",\n" +
-            "\"limite\" : \"100\",\n" +
-            "\"tipo\" : \"corrente\"\n" +
-            "}";
 
-    private static String payload2 = "{\n" +
-            "\"agencia\" : \"2\",\n" +
-            "\"conta\" : \"2\",\n" +
-            "\"saldo\" : \"2000\",\n" +
-            "\"limite\" : \"100\",\n" +
-            "\"tipo\" : \"corrente\"\n" +
-            "}";
+    @BeforeClass
+    @DisplayName("Inicit DB")
+    public static void postJsonPayloadSend() {
 
-    private static String payload3 = "{\n" +
-            "\"agenciaOrig\": 1,\n" +
-            "    \"contaOrig\": 1,\n" +
-            "    \"agenciaDest\": 2,\n" +
-            "    \"contaDest\": 2,\n" +
-            "    \"saldo\": 1000.0,\n" +
-            "    \"limite\": 100.0,\n" +
-            "    \"tipo\": \"corrente\",\n" +
-            "    \"status\": \"ok\",\n" +
-            "    \"data\": \"10\"\n" +
-            "}";
+        InsertAccountPost(f.getConta1());
+        InsertAccountPost(f.getConta2());
+    }
 
-    @DisplayName("Test INit")
-    public Response postJsonPayload(String payload) {
+    public static Response InsertAccountPost(String payload) {
         RestAssured.defaultParser = Parser.JSON;
         return    given().contentType("application/json")
                         .body(payload)
@@ -56,7 +39,7 @@ public class TestRequest   {
                         ;
     }
 
-    public Response postJsonPayload2(String payload) {
+    public static Response TestTransSucess(String payload) {
         RestAssured.defaultParser = Parser.JSON;
         return
                 given().contentType("application/json")
@@ -69,18 +52,37 @@ public class TestRequest   {
                 ;
     }
 
-    @Test
-    public void postJsonPayloadSend() {
+    public static Response TestTransOverLimit(String payload) {
+        RestAssured.defaultParser = Parser.JSON;
+        return
+                given().contentType("application/json")
+                        .body(payload)
+                        .post("/rest/lanc")
+                        .then()
+                        .statusCode(500)
+                        .extract()
+                        .response()
+                ;
+    }
 
-        this.postJsonPayload(payload1);
-        this.postJsonPayload(payload2);
+    @DisplayName("Transf Execution Sucess")
+    @Test
+    public void postJsonPayloadSend2() {
+        TestTransSucess(f.getTransf1());
+
+    }
+
+    @DisplayName("Transf Execution Error - Over Limite")
+    @Test
+    public void PostTrasfOver() {
+        TestTransOverLimit(f.getTransfOver());
     }
 
 
-    @Test
-    public void postJsonPayload2() {
-        this.postJsonPayload2(payload3);
-    }
+    //   @Test
+//    public void TestTransSucess() {
+    //       this.TestTransSucess(payload3);
+    //  }
 //        @DisplayName("Test 1")
 //        @Test
 //        public void  testGet() {
