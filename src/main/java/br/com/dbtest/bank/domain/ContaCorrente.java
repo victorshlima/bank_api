@@ -11,10 +11,10 @@ import java.util.Objects;
 @Table(name = "contacorrente"
         ,        indexes = { @Index(
         columnList = "agencia, conta",
-                unique = true,
+        unique = true,
         name = "unique_agencia_conta")
 
-        })
+})
 
 @JsonFormat
 @JsonAutoDetect

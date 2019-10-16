@@ -2,8 +2,6 @@ package br.com.dbtest.bank.resource.rest;
 
 import br.com.dbtest.bank.domain.Lancamento;
 import br.com.dbtest.bank.service.LancamentoService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,7 @@ import java.net.URI;
 )
 public class LancamentoRestController {
 
-    static final Logger logger = LogManager.getLogger(LancamentoRestController.class.getName());
+    //  static final Logger logger = LogManager.getLogger(LancamentoRestController.class.getName());
 
 
 
@@ -35,7 +33,7 @@ public class LancamentoRestController {
     @PostMapping
     public ResponseEntity<Void> Exec(@RequestBody Lancamento lancamento){
 
-        logger.trace("@PostMapping - LancamentoService ");
+        //   logger.trace("@PostMapping - LancamentoService ");
 
         lancamentoService.lancamento(lancamento);
         System.out.println("PostMapping");

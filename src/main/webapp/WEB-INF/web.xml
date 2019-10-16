@@ -15,11 +15,9 @@
         <param-name>log4jConfiguration</param-name>
         <param-value>WEB-INF/log4j.properties</param-value>
     </context-param>
-
     <listener>
         <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
     </listener>
-
     <filter>
         <filter-name>log4jServletFilter</filter-name>
         <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
@@ -31,6 +29,6 @@
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
-        <dispatcher>ASYNC</dispatcher><!-- Servlet 3.0 w/ disabled auto-initialization only; not supported in 2.5 -->
+        <dispatcher>ASYNC</dispatcher>
     </filter-mapping>
 </web-app>

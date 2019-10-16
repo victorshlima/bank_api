@@ -20,9 +20,9 @@ public class LancamentoDaoImpl implements LancamentoDao {
 
     @Override
     public Lancamento findLancamento(Long id) {
-            return entityManager
-                    .createQuery("select l from Lancamento l where id ="+id, Lancamento.class)
-                    .getSingleResult();
+        return entityManager
+                .createQuery("select l from Lancamento l where id =" + id, Lancamento.class)
+                .getSingleResult();
     }
 
     @Override
