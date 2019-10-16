@@ -1,16 +1,17 @@
 package br.com.dbtest.bank;
 
 
+import br.com.dbtest.bank.resource.rest.LancamentoRestController;
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.experimental.categories.Category;
 
 import static io.restassured.RestAssured.given;
 
-public class TestRequest   {
+public class TestRequest extends LancamentoRestController {
 
     private static TestFiles f = new TestFiles();
 
@@ -21,7 +22,6 @@ public class TestRequest   {
       }
 
     @BeforeClass
-    @DisplayName("Inicit DB")
     public static void postJsonPayloadSend() {
 
         InsertAccountPost(f.getConta1());
@@ -65,14 +65,14 @@ public class TestRequest   {
                 ;
     }
 
-    @DisplayName("Transf Execution Sucess")
+
     @Test
+    @Category(br.com.dbtest.bank.resource.rest.LancamentoRestController.class)
     public void postJsonPayloadSend2() {
         TestTransSucess(f.getTransf1());
 
     }
 
-    @DisplayName("Transf Execution Error - Over Limite")
     @Test
     public void PostTrasfOver() {
         TestTransOverLimit(f.getTransfOver());
