@@ -6,6 +6,8 @@ import br.com.dbtest.bank.dao.ContaDao;
 import br.com.dbtest.bank.dao.LancamentoDao;
 import br.com.dbtest.bank.domain.ContaCorrente;
 import br.com.dbtest.bank.domain.Lancamento;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,10 @@ import javax.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
-public class lancamentoServiceImpl implements LancamentoService  {
+public class LancamentoServiceImpl implements LancamentoService {
+
+    static final Logger logger = LogManager.getLogger(LancamentoServiceImpl.class.getName());
+
     @Autowired
     private ContaDao contaDao;
 
@@ -24,29 +29,26 @@ public class lancamentoServiceImpl implements LancamentoService  {
     @Override
     public Lancamento lancamento(Lancamento lancamento) {
 
-        validaAgenciaConta(lancamento.getAgenciaOrig(), lancamento.getContaOrig());
-        validaAgenciaConta(lancamento.getAgenciaDest(), lancamento.getContaDest());
+        validateAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig());
+        validateAccount(lancamento.getAgenciaDest(), lancamento.getContaDest());
         veficaSaldo(contaDao.findAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig()), lancamento.getValor());
         return execTrans(lancamento);
     }
 
-    private boolean validaAgenciaConta (int agencia, int conta){
-       if ( contaDao.findAccount(agencia,conta ) !=null)   {
-           System.out.println( "validaAgenciaConta = true"+ "\n");
+    private boolean validateAccount(int agency, int account) {
+        if (contaDao.findAccount(agency, account) != null) {
+            logger.debug("Validate account true");
            return true;
        }    else {
-           System.out.println( "validaAgenciaConta = false"+ "\n");
            return false;
        }
     }
 
-    private void veficaSaldo(ContaCorrente conta, Double valorLancamento) {
-        if ( conta.getSaldo() + conta.getLimite() >= valorLancamento ){
-            System.out.println( "possi Possui Saldo" + "\n");
+    private void veficaSaldo(ContaCorrente account, Double valuePosting) {
+        if (account.getSaldo() + account.getLimite() >= valuePosting) {
 
         } else {
-            System.out.println("Nao Possui Saldo" + "\n");
-            throw new LimitOverException("Não Possui Saldo Sificiente");
+            throw new LimitOverException("Don't have maney enough");
         }
     }
 
@@ -58,7 +60,7 @@ public class lancamentoServiceImpl implements LancamentoService  {
             Lancamento l = lancamentoDao.findLancamento(lancamento.getId());
             return l;
         } catch (EntityNotFoundException ex) {
-            throw new TransationErrorException("Erro ao executar a Transferencia");
+            throw new TransationErrorException("Transf execute error");
         }
 
     }

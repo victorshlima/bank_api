@@ -1,9 +1,12 @@
 package br.com.dbtest.bank.resource.exception;
 
 
-import br.com.dbtest.bank.Exception.InvalidIdServiceException;
+import br.com.dbtest.bank.Exception.LimitOverException;
 import br.com.dbtest.bank.Exception.NotExistDaoException;
-import br.com.dbtest.bank.domain.DetalheErro;
+import br.com.dbtest.bank.domain.DetailError;
+import br.com.dbtest.bank.service.LancamentoServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +20,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-//Monitora a classe com o erro
-    //clicar no direito e verificar no metodo qual seria a classe de exceção
-    //quando essa classe aparece no log @ExceptionHandler é acionado e podemos tratar a excecao
-    //NullPointerException.class, IllegalArgumentException.class
-    //org.hibernate.exception.ConstraintViolationException.class
-    // public ResponseEntity<Object> Objeto de resposta
-    @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
-    public ResponseEntity<Object> serverException(RuntimeException ex, WebRequest request) {
+    static final Logger logger = LogManager.getLogger(LancamentoServiceImpl.class.getName());
 
+    @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class, LimitOverException.class,
+            javax.persistence.NoResultException.class})
+    public ResponseEntity<Object> serverException(RuntimeException ex, WebRequest request) {
+        logger.error(ex.getMessage());
         return handleExceptionInternal(
-                ex, DetalheErro.builder()
-                        .addDetalhe("Um exceção foi lançada.")
+                ex, DetailError.builder()
+                        .addDetail("Generic Error")
                         .addErro(ex.getMessage())
                         .addStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                         .addHttpMethod(getHttpMethod(request))
@@ -40,14 +40,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({org.hibernate.exception.ConstraintViolationException.class})
     public ResponseEntity<Object> constraintViolada(org.hibernate.exception.ConstraintViolationException ex,
                                                     WebRequest request) {
-        // ex de runtime exception
+        logger.error(ex.getMessage());
         return handleExceptionInternal(
-                ex, DetalheErro.builder()
-                        .addDetalhe("Constraint violada: " + ex.getConstraintName()) //Não retorno o campo, mas é possivel
-                        //retornar o indice para identifcar qual o registro com informacoes duplicadas
+                ex, DetailError.builder()
+                        .addDetail("Violated constraint: " + ex.getConstraintName()) //Não retorno o campo, mas é possivel
                         .addErro(ex.getMessage())
                         .addStatus(HttpStatus.CONFLICT)
-                        //CONFLICT cadastro redundante
                         .addHttpMethod(getHttpMethod(request))
                         .addPath(getPath(request))
                         .build(),
@@ -55,58 +53,35 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({org.hibernate.PropertyValueException.class})
-    public ResponseEntity<Object> propriedadeNula(org.hibernate.PropertyValueException ex, WebRequest request) {
-
+    public ResponseEntity<Object> nullField(org.hibernate.PropertyValueException ex, WebRequest request) {
+        logger.error(ex.getMessage());
         return handleExceptionInternal(
-                ex, DetalheErro.builder()
-                        .addDetalhe("O atributo '"+ ex.getPropertyName() +"' não pode ser nulo.")
-                        // RETORNAR APENAS UM CAMPO COM ERRO
-                        //TANVEZ VALIDAR UM SCHEMA NO BODY QUANDO OCORRER ERRO  PORSSA RETORNAR MAIS INFOS
+                ex, DetailError.builder()
+                        .addDetail("The field'" + ex.getPropertyName() + "' is mandatory.")
                         .addErro(ex.getMessage())
                         .addStatus(HttpStatus.BAD_REQUEST)
-                        //BADREQUEST - valor incorreto na request
                         .addHttpMethod(getHttpMethod(request))
                         .addPath(getPath(request))
                         .build(),
-                new HttpHeaders(), //necessário um header na response
-                HttpStatus.BAD_REQUEST, // resposta do erro
-                request);  //referente ao webrequest da assinatura do metodo
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({NotExistDaoException.class})
-    public ResponseEntity<Object> entidadeNaoEncontrada(NotExistDaoException ex, WebRequest request) {
-
+    public ResponseEntity<Object> entityNotFound(NotExistDaoException ex, WebRequest request) {
+        logger.error(ex.getMessage());
         return handleExceptionInternal(
-                ex, DetalheErro.builder()
-                        .addDetalhe("Recurso não encontrado na base de dados.")
+                ex, DetailError.builder()
+                        .addDetail("Resource not found")
                         .addErro(ex.getMessage())
                         .addStatus(HttpStatus.NOT_FOUND)
                         .addHttpMethod(getHttpMethod(request))
                         .addPath(getPath(request))
                         .build(),
-                new HttpHeaders(), //necessário um header na response
-                HttpStatus.NOT_FOUND, // resposta do erro
-                request);  //referente ao webrequest da assinatura do metodo
+                new HttpHeaders(),
+                HttpStatus.NOT_FOUND,
+                request);
     }
 
-
-    @ExceptionHandler({InvalidIdServiceException.class})
-    public ResponseEntity<Object> entidadeNaoEncontrada(InvalidIdServiceException ex, WebRequest request) {
-
-        return handleExceptionInternal(
-                ex, DetalheErro.builder()
-                        .addDetalhe("Recurso não encontrado na base de dados.")
-                        .addErro(ex.getMessage())
-                        .addStatus(HttpStatus.BAD_REQUEST)
-                        .addHttpMethod(getHttpMethod(request))
-                        .addPath(getPath(request))
-                        .build(),
-                new HttpHeaders(), //necessário um header na response
-                HttpStatus.BAD_REQUEST, // resposta do erro
-                request);  //referente ao webrequest da assinatura do metodo
-    }
-
-    //com a WebRequest podemos recuperar o path e mo methodo Http da excecao
     private String getPath(WebRequest request) {
         return ((ServletWebRequest) request).getRequest().getRequestURI();
     }

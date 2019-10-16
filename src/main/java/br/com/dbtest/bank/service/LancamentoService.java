@@ -6,6 +6,4 @@ public interface LancamentoService {
 
     Lancamento lancamento(Lancamento lancamento);
 
-
-
 }

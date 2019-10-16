@@ -25,18 +25,4 @@ public class ContaServiceImpl implements ContaService {
         return contaDao.findAll();
     }
 
-    private ContaCorrente validaAgenciaConta (int agencia, int conta){
-        return   contaDao.findAccount(agencia,conta );
-    }
-
-    private boolean veficaSaldo (ContaCorrente conta, Double valorLancamento){
-        if ( conta.getSaldo() >= valorLancamento ){
-            System.out.println( "possi Possui Saldo" + "\n");
-            return  true;
-        }
-        System.out.println( "Nao Possui Saldo"+ "\n");
-        return  false;
-    }
-
-
 }

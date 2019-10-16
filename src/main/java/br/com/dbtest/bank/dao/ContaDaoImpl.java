@@ -1,6 +1,9 @@
 package br.com.dbtest.bank.dao;
 
 import br.com.dbtest.bank.domain.ContaCorrente;
+import br.com.dbtest.bank.service.LancamentoServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +14,7 @@ import java.util.List;
 
 @Repository
 public class ContaDaoImpl implements ContaDao {
-
+    static final Logger logger = LogManager.getLogger(LancamentoServiceImpl.class.getName());
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -21,15 +24,13 @@ public class ContaDaoImpl implements ContaDao {
     @Override
     public boolean tranfere(ContaCorrente conta, Double valor) {
 
-        ContaCorrente conta1 = contaDao.findAccount(conta.getAgencia(),conta.getConta());
+        ContaCorrente c = contaDao.findAccount(conta.getAgencia(), conta.getConta());
         try {
-            conta1.setSaldo(   conta1.getSaldo() + valor);
-            entityManager.merge(conta1);
-            System.out.println( conta1.toString());
-            System.out.println( "Sucesso na Traferencia"+ "\n");
+            c.setSaldo(c.getSaldo() + valor);
+            entityManager.merge(c);
+            logger.debug("Transf Sucess");
         }catch (Exception e){
-            System.out.println( conta1.toString());
-            System.out.println( "Erro ao transferir"+ "\n");
+            new ExceptionInInitializerError("Transf Error");
             return false;
         }
         return true;

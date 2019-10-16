@@ -13,7 +13,6 @@ import java.util.Objects;
         columnList = "agencia, conta",
         unique = true,
         name = "unique_agencia_conta")
-
 })
 
 @JsonFormat

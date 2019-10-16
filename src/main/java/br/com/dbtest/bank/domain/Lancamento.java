@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -26,16 +27,20 @@ public class Lancamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
+    @Pattern(regexp = "\\d{5}")
+    @Column(nullable = false, length = 5)
     private int agenciaOrig;
 
-    @Column( nullable = false)
+    @Pattern(regexp = "\\d{9}")
+    @Column(nullable = false, length = 9)
     private int contaOrig;
 
-    @Column( nullable = false)
+    @Pattern(regexp = "\\d{5}")
+    @Column(nullable = false, length = 5)
     private int agenciaDest;
 
-    @Column( nullable = false)
+    @Pattern(regexp = "\\d{9}")
+    @Column(nullable = false, length = 9)
     private int contaDest;
 
     @Column( nullable = false)
@@ -44,10 +49,11 @@ public class Lancamento implements Serializable {
     @Column( nullable = false)
     private Double limite;
 
-    @Column( nullable = false)
+    @Pattern(regexp = "\\w{0,15}")
+    @Column(nullable = false, length = 15)
     private String tipo;
 
-    @JsonFormat(pattern = "yyyyMMddHHmmsss")
+    @JsonFormat(pattern = "yyyyMMddHHmmSSS")
     @Column(name = "data_inicio")
     private Date date;
 
@@ -148,7 +154,6 @@ public class Lancamento implements Serializable {
                 ", status='" + status + '\'' +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {

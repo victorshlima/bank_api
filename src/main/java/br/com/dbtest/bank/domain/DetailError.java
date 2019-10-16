@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DetalheErro implements Serializable {
+public class DetailError implements Serializable {
 
     private Integer statusCode;
 
@@ -17,7 +17,7 @@ public class DetalheErro implements Serializable {
 
     private String erro;
 
-    private String detalhe;
+    private String detail;
 
     private String path;
 
@@ -37,8 +37,8 @@ public class DetalheErro implements Serializable {
         return erro;
     }
 
-    public String getDetalhe() {
-        return detalhe;
+    public String getDetail() {
+        return detail;
     }
 
     public String getPath() {
@@ -52,10 +52,10 @@ public class DetalheErro implements Serializable {
 
     public static class Builder {
 
-        private DetalheErro erro;
+        private DetailError erro;
 
         Builder (){
-            this.erro = new DetalheErro();
+            this.erro = new DetailError();
         }
 
         public Builder addStatus(HttpStatus status) {
@@ -74,8 +74,8 @@ public class DetalheErro implements Serializable {
             return this;
         }
 
-        public Builder addDetalhe(String detalhe) {
-            this.erro.detalhe = detalhe;
+        public Builder addDetail(String detail) {
+            this.erro.detail = detail;
             return this;
         }
 
@@ -84,7 +84,7 @@ public class DetalheErro implements Serializable {
             return this;
         }
 
-        public DetalheErro build() {
+        public DetailError build() {
             return this.erro;
         }
     }

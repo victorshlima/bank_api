@@ -79,6 +79,19 @@ public class TestRequest extends LancamentoRestController {
     }
 
 
+    //validar agencia quant de digito
+    // validar padrao de data
+    // validar letra na agencia
+    // add o campo a translação na conta
+    // teste com json mau formatado trans
+    // test com campo nulo
+    //
+
+
+
+
+
+
     //   @Test
 //    public void TestTransSucess() {
     //       this.TestTransSucess(payload3);
