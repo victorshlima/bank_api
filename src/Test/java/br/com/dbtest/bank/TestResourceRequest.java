@@ -31,16 +31,6 @@ public class TestResourceRequest implements Serializable {
             "}";
 
 
-    public static String transfSameOrigin = "{\n" +
-            "\"agenciaOrig\":12301,\n" +
-            "    \"contaOrig\":123000123,\n" +
-            "    \"agenciaDest\":12301,\n" +
-            "    \"contaDest\":123000123,\n" +
-            "    \"valor\": 100.00,\n" +
-            "    \"tipo\": \"corrente\",\n" +
-            "    \"date\": \"2019101000123\",\n" +
-            "    \"status\": \"ok\"\n" +
-            "}";
     public static String transfOk = "{\n" +
             "\"agenciaOrig\":12301,\n" +
             "    \"contaOrig\":123000123,\n" +
@@ -98,15 +88,6 @@ public class TestResourceRequest implements Serializable {
             "    \"status\": \"ok\"\n" +
             "}";
     public String urlTransfError = "/restInvalid/lanc";
-    public String urlInsertError = "/restInvalid/transfs";
-
-    public static String getTransfSameOrigin() {
-        return transfSameOrigin;
-    }
-
-    public static String getAgencyAbasent() {
-        return agencyAbasent;
-    }
 
     public static String getConta3() {
         return conta3;
@@ -114,10 +95,6 @@ public class TestResourceRequest implements Serializable {
 
     public String getUrlTransfError() {
         return urlTransfError;
-    }
-
-    public String getUrlInsertError() {
-        return urlInsertError;
     }
 
     public String getInvalidType() {

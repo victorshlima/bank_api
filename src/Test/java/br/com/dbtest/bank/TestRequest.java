@@ -73,11 +73,6 @@ public class TestRequest extends LancamentoRestController {
     }
 
     @Test
-    public void TestSameOrigin() {
-        PostTransf(TestResourceRequest.getTransfSameOrigin(), 500);
-    }
-
-    @Test
     public void TestInvalidType() {
         PostTransf(f.getInvalidType(), 400);
     }
