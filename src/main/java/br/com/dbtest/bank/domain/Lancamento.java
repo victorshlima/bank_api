@@ -5,16 +5,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "lancamento",
-        indexes = { @Index(
-                columnList = "agenciaOrig, contaOrig, agenciaDest, contaDest, id",
-                unique = true,
-                name = "unique_agenciaOrig_contaOrig_agenciaDest_contaDest_contaDest_id")
+        indexes = {
+                @Index(
+                        columnList = "agenciaOrig, contaOrig, agenciaDest, contaDest, id",
+                        unique = true,
+                        name = "unique_agenciaOrig_contaOrig_agenciaDest_contaDest_contaDest_id")
         })
 
 @JsonFormat
@@ -26,32 +28,34 @@ public class Lancamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
+
+    @Column(nullable = false, length = 6)
     private int agenciaOrig;
 
-    @Column( nullable = false)
+
+    @Column(nullable = false, length = 10)
     private int contaOrig;
 
-    @Column( nullable = false)
+
+    @Column(nullable = false, length = 6)
     private int agenciaDest;
 
-    @Column( nullable = false)
+
+    @Column(nullable = false, length = 10)
     private int contaDest;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Double valor;
 
-    @Column( nullable = false)
-    private Double limite;
-
-    @Column( nullable = false)
+    @Pattern(regexp = "\\w{0,15}")
+    @Column(nullable = false, length = 15)
     private String tipo;
 
-    @JsonFormat(pattern = "yyyyMMddHHmmsss")
+    @JsonFormat(pattern = "yyyyMMddHHmmSSS")
     @Column(name = "data_inicio")
     private Date date;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String status;
 
     public Double getValor() {
@@ -74,7 +78,9 @@ public class Lancamento implements Serializable {
         return agenciaOrig;
     }
 
-    public void setAgenciaOrig(int agenciaOrig) {this.agenciaOrig = agenciaOrig;}
+    public void setAgenciaOrig(int agenciaOrig) {
+        this.agenciaOrig = agenciaOrig;
+    }
 
     public int getContaOrig() {
         return contaOrig;
@@ -100,14 +106,6 @@ public class Lancamento implements Serializable {
         this.contaDest = contaDest;
     }
 
-
-    public Double getLimite() {
-        return limite;
-    }
-
-    public void setLimite(Double limite) {
-        this.limite = limite;
-    }
 
     public String getTipo() {
         return tipo;
@@ -142,13 +140,11 @@ public class Lancamento implements Serializable {
                 ", agenciaDest=" + agenciaDest +
                 ", contaDest=" + contaDest +
                 ", valor=" + valor +
-                ", limite=" + limite +
                 ", tipo='" + tipo + '\'' +
                 ", date=" + date +
                 ", status='" + status + '\'' +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -161,7 +157,6 @@ public class Lancamento implements Serializable {
                 contaDest == that.contaDest &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(valor, that.valor) &&
-                Objects.equals(limite, that.limite) &&
                 Objects.equals(tipo, that.tipo) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(status, that.status);
@@ -169,6 +164,6 @@ public class Lancamento implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, agenciaOrig, contaOrig, agenciaDest, contaDest, valor, limite, tipo, date, status);
+        return Objects.hash(id, agenciaOrig, contaOrig, agenciaDest, contaDest, valor, tipo, date, status);
     }
 }

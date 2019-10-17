@@ -5,46 +5,55 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
-@Table(name = "contacorrente"
-        ,        indexes = { @Index(
-                columnList = "agencia, conta, id",
+@Table(name = "contacorrente", indexes = {
+        @Index(
+                columnList = "agencia, conta",
                 unique = true,
-                name = "unique_agencia_conta_id")
-
-        })
-
+                name = "unique_agencia_conta")
+})
 
 @JsonFormat
 @JsonAutoDetect
 public class ContaCorrente implements Serializable {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
+    @Column(nullable = false, length = 6)
     private int agencia;
 
-    @Column( nullable = false)
+    @Column(nullable = false, length = 10)
     private int conta;
 
-    @Column( nullable = false)
+
+    @Column(nullable = false)
     private Double saldo;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Double limite;
 
-    @Column( nullable = false)
+    @Column(nullable = false, length = 20)
     private String tipo;
-    // colcoar enuns para os tipos de contas
-    // @Column( nullable = false)
-    private String data;
-    //INSERIR A DATA DA TRANS E ID da TRANS
+
+
+    @Column
+    @OneToMany(fetch = FetchType.EAGER, cascade = ALL, targetEntity = Lancamento.class)
+    private List Lancamento;
+
+    public List getLancamento() {
+        return Lancamento;
+    }
+
+    public void setLancamento(Lancamento lancamento) {
+        Lancamento.add(lancamento);
+    }
 
     public Long getId() {
         return id;
@@ -93,6 +102,7 @@ public class ContaCorrente implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
 
     @Override
     public boolean equals(Object o) {

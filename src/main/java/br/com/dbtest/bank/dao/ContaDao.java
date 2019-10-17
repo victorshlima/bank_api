@@ -2,6 +2,7 @@ package br.com.dbtest.bank.dao;
 
 
 import br.com.dbtest.bank.domain.ContaCorrente;
+import br.com.dbtest.bank.domain.Lancamento;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,25 +10,12 @@ import java.util.List;
 @Repository
 public interface ContaDao {
 
+    List<ContaCorrente> findAll();
 
+    ContaCorrente findAccount(int agencia, int conta);
 
+    void save(ContaCorrente conta);
 
-
-
-
-    double saldo (int agencia, int conta);
-
-
-    ContaCorrente getConta ();
-
-    List<ContaCorrente> findAll() ;
-
-
-    ContaCorrente findAccount(int agencia, int conta) ;
-
-    void save (ContaCorrente conta);
-
-    boolean tranfere(ContaCorrente conta, Double valor);
-
+    boolean tranfere(ContaCorrente conta, Double valor, Lancamento lanc);
 
 }

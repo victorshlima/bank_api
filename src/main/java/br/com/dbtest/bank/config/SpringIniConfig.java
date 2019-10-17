@@ -4,7 +4,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class SpringIniConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{SpringRootConfig.class};

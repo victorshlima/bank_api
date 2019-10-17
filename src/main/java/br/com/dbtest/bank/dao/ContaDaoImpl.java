@@ -1,6 +1,10 @@
 package br.com.dbtest.bank.dao;
 
 import br.com.dbtest.bank.domain.ContaCorrente;
+import br.com.dbtest.bank.domain.Lancamento;
+import br.com.dbtest.bank.service.LancamentoServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,50 +15,34 @@ import java.util.List;
 
 @Repository
 public class ContaDaoImpl implements ContaDao {
-
+    static final Logger logger = LogManager.getLogger(LancamentoServiceImpl.class.getName());
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
     private ContaDao contaDao;
 
-    @Override
-    public boolean tranfere(ContaCorrente conta, Double valor) {
 
-        ContaCorrente conta1 = contaDao.findAccount(conta.getAgencia(),conta.getConta());
+    @Override
+    public boolean tranfere(ContaCorrente conta, Double valor, Lancamento lanc) {
+
+        ContaCorrente c = contaDao.findAccount(conta.getAgencia(), conta.getConta());
         try {
-            conta1.setSaldo(   conta1.getSaldo() + valor);
-            entityManager.merge(conta1);
-            System.out.println( conta1.toString());
-            System.out.println( "Sucesso na Traferencia"+ "\n");
-        }catch (Exception e){
-            System.out.println( conta1.toString());
-            System.out.println( "Erro ao transferir"+ "\n");
+            c.setSaldo(c.getSaldo() + valor);
+            c.setLancamento(lanc);
+            entityManager.merge(c);
+            logger.debug("Transf Sucess");
+        } catch (Exception e) {
+            new ExceptionInInitializerError("Transf Error");
             return false;
         }
         return true;
     }
 
     @Override
-    public double saldo(int agencia, int conta) {
-        //  throw new NaoExisteDaoException("ContaCorrente" + agencia + conta +" não encontrada" );
-        return 000.00;
-    }
-
-
-
-    @Override
-    public ContaCorrente getConta() {
-        return entityManager
-                .createQuery("select c from ContaCorrente c", ContaCorrente.class)
-                .getSingleResult();
-    }
-
-    @Override
     public List<ContaCorrente> findAll() {
         return entityManager
                 .createQuery("select c from ContaCorrente c", ContaCorrente.class)
-                // .createQuery("select c from ContaCorrente c where agencia =1000 and conta =1", ContaCorrente.class)
                 .getResultList();
     }
 
@@ -62,7 +50,6 @@ public class ContaDaoImpl implements ContaDao {
     public ContaCorrente findAccount(int agencia, int conta) {
         return entityManager
                 .createQuery("select c from ContaCorrente c where agencia =" + agencia + " and conta =" + conta, ContaCorrente.class)
-                //   .createQuery("select c from ContaCorrente c where agencia =1000 and conta =1", ContaCorrente.class)
                 .getSingleResult();
     }
 
