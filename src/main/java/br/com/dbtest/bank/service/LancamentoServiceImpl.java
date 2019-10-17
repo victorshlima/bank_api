@@ -56,8 +56,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 
     private Lancamento execTrans(Lancamento lancamento) {
         try {
-            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig()), -lancamento.getValor());
-            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaDest(), lancamento.getContaDest()), +lancamento.getValor());
+            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig()), -lancamento.getValor(), lancamento);
+            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaDest(), lancamento.getContaDest()), +lancamento.getValor(), lancamento);
             lancamentoDao.save(lancamento);
             Lancamento l = lancamentoDao.findLancamento(lancamento.getId());
             return l;

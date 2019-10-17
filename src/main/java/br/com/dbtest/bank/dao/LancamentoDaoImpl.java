@@ -1,7 +1,6 @@
 package br.com.dbtest.bank.dao;
 
 import br.com.dbtest.bank.domain.Lancamento;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,9 +13,6 @@ public class LancamentoDaoImpl implements LancamentoDao {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Autowired
-    private LancamentoDao lancamentoDao;
 
     @Override
     public Lancamento findLancamento(Long id) {

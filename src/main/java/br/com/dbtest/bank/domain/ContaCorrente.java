@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
 @Table(name = "contacorrente"
         ,        indexes = { @Index(
@@ -41,16 +43,15 @@ public class ContaCorrente implements Serializable {
     private String tipo;
 
     @Column(nullable = true)
-    // @OneToMany( fetch=FetchType.EAGER, cascade = ALL,targetEntity=Lancamento.class )
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Lancamento.class)
+    @OneToMany(fetch = FetchType.EAGER, cascade = ALL, targetEntity = Lancamento.class)
     private List Lancamento;
 
     public List getLancamento() {
         return Lancamento;
     }
 
-    public void setLancamento(List lancamento) {
-        Lancamento = lancamento;
+    public void setLancamento(Lancamento lancamento) {
+        Lancamento.add(lancamento);
     }
 
     public Long getId() {

@@ -1,6 +1,7 @@
 package br.com.dbtest.bank.dao;
 
 import br.com.dbtest.bank.domain.ContaCorrente;
+import br.com.dbtest.bank.domain.Lancamento;
 import br.com.dbtest.bank.service.LancamentoServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,12 +22,14 @@ public class ContaDaoImpl implements ContaDao {
     @Autowired
     private ContaDao contaDao;
 
+
     @Override
-    public boolean tranfere(ContaCorrente conta, Double valor) {
+    public boolean tranfere(ContaCorrente conta, Double valor, Lancamento lanc) {
 
         ContaCorrente c = contaDao.findAccount(conta.getAgencia(), conta.getConta());
         try {
             c.setSaldo(c.getSaldo() + valor);
+            c.setLancamento(lanc);
             entityManager.merge(c);
             logger.debug("Transf Sucess");
         }catch (Exception e){
