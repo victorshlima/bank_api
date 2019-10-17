@@ -29,7 +29,7 @@ public class LancamentoRestController {
     private LancamentoService lancamentoService;
 
     @PostMapping
-    public ResponseEntity<Void> Exec(@RequestBody Lancamento lancamento){
+    public ResponseEntity<Void> Exec(@RequestBody Lancamento lancamento) {
 
         logger.trace("@PostMapping - Transf Begin ");
         lancamentoService.lancamento(lancamento);
@@ -40,7 +40,7 @@ public class LancamentoRestController {
                 .path("/{id}")
                 .buildAndExpand(lancamento.getId())
                 .toUri();
-        return    ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).build();
     }
 
 }

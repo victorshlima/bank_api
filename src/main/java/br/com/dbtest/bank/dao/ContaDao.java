@@ -10,11 +10,11 @@ import java.util.List;
 @Repository
 public interface ContaDao {
 
-    List<ContaCorrente> findAll() ;
+    List<ContaCorrente> findAll();
 
-    ContaCorrente findAccount(int agencia, int conta) ;
+    ContaCorrente findAccount(int agencia, int conta);
 
-    void save (ContaCorrente conta);
+    void save(ContaCorrente conta);
 
     boolean tranfere(ContaCorrente conta, Double valor, Lancamento lanc);
 

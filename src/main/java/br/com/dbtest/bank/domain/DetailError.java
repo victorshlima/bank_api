@@ -54,7 +54,7 @@ public class DetailError implements Serializable {
 
         private DetailError erro;
 
-        Builder (){
+        Builder() {
             this.erro = new DetailError();
         }
 
@@ -89,7 +89,3 @@ public class DetailError implements Serializable {
         }
     }
 }
-
-
-
-

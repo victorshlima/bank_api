@@ -32,7 +32,7 @@ public class ContaDaoImpl implements ContaDao {
             c.setLancamento(lanc);
             entityManager.merge(c);
             logger.debug("Transf Sucess");
-        }catch (Exception e){
+        } catch (Exception e) {
             new ExceptionInInitializerError("Transf Error");
             return false;
         }

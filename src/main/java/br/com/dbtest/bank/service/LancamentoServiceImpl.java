@@ -40,10 +40,10 @@ public class LancamentoServiceImpl implements LancamentoService {
     private boolean validateAccount(int agency, int account) {
         if (contaDao.findAccount(agency, account) != null) {
             logger.debug("Validate account true");
-           return true;
-       }    else {
-           return false;
-       }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void veficaSaldo(ContaCorrente account, Double valuePosting) {

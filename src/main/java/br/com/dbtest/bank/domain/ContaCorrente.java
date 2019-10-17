@@ -11,11 +11,11 @@ import java.util.Objects;
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
-@Table(name = "contacorrente"
-        ,        indexes = { @Index(
-        columnList = "agencia, conta",
-        unique = true,
-        name = "unique_agencia_conta")
+@Table(name = "contacorrente", indexes = {
+        @Index(
+                columnList = "agencia, conta",
+                unique = true,
+                name = "unique_agencia_conta")
 })
 
 @JsonFormat
@@ -26,23 +26,24 @@ public class ContaCorrente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
+    @Column(nullable = false, length = 6)
     private int agencia;
 
-    @Column( nullable = false)
+    @Column(nullable = false, length = 10)
     private int conta;
 
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Double saldo;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Double limite;
 
-    @Column( nullable = false)
+    @Column(nullable = false, length = 20)
     private String tipo;
 
-    @Column(nullable = true)
+
+    @Column
     @OneToMany(fetch = FetchType.EAGER, cascade = ALL, targetEntity = Lancamento.class)
     private List Lancamento;
 

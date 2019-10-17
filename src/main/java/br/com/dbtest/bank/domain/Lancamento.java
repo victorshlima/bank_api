@@ -12,10 +12,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "lancamento",
-        indexes = { @Index(
-                columnList = "agenciaOrig, contaOrig, agenciaDest, contaDest, id",
-                unique = true,
-                name = "unique_agenciaOrig_contaOrig_agenciaDest_contaDest_contaDest_id")
+        indexes = {
+                @Index(
+                        columnList = "agenciaOrig, contaOrig, agenciaDest, contaDest, id",
+                        unique = true,
+                        name = "unique_agenciaOrig_contaOrig_agenciaDest_contaDest_contaDest_id")
         })
 
 @JsonFormat
@@ -27,23 +28,23 @@ public class Lancamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @Pattern(regexp = "\\d{0,5}")
+
     @Column(nullable = false, length = 6)
     private int agenciaOrig;
 
-    //   @Pattern(regexp = "\\d{0,9}")
+
     @Column(nullable = false, length = 10)
     private int contaOrig;
 
-    //  @Pattern(regexp = "\\d{0,5}")
+
     @Column(nullable = false, length = 6)
     private int agenciaDest;
 
-    //  @Pattern( regexp= "\\d{0,9}")
+
     @Column(nullable = false, length = 10)
     private int contaDest;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Double valor;
 
     @Pattern(regexp = "\\w{0,15}")
@@ -54,7 +55,7 @@ public class Lancamento implements Serializable {
     @Column(name = "data_inicio")
     private Date date;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String status;
 
     public Double getValor() {
@@ -77,7 +78,9 @@ public class Lancamento implements Serializable {
         return agenciaOrig;
     }
 
-    public void setAgenciaOrig(int agenciaOrig) {this.agenciaOrig = agenciaOrig;}
+    public void setAgenciaOrig(int agenciaOrig) {
+        this.agenciaOrig = agenciaOrig;
+    }
 
     public int getContaOrig() {
         return contaOrig;

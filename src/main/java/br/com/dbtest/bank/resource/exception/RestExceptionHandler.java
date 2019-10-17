@@ -22,8 +22,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     static final Logger logger = LogManager.getLogger(LancamentoServiceImpl.class.getName());
 
-    @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class, LimitOverException.class,
-            javax.persistence.NoResultException.class})
+    @ExceptionHandler({
+            NullPointerException.class,
+            IllegalArgumentException.class,
+            LimitOverException.class,
+            javax.persistence.NoResultException.class
+    })
     public ResponseEntity<Object> serverException(RuntimeException ex, WebRequest request) {
         logger.error(ex.getMessage());
         return handleExceptionInternal(
@@ -37,7 +41,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-    @ExceptionHandler({org.hibernate.exception.ConstraintViolationException.class})
+    @ExceptionHandler({
+            org.hibernate.exception.ConstraintViolationException.class
+    })
     public ResponseEntity<Object> constraintViolada(org.hibernate.exception.ConstraintViolationException ex,
                                                     WebRequest request) {
         logger.error(ex.getMessage());
@@ -52,7 +58,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
-    @ExceptionHandler({org.hibernate.PropertyValueException.class})
+    @ExceptionHandler({
+            org.hibernate.PropertyValueException.class
+    })
     public ResponseEntity<Object> nullField(org.hibernate.PropertyValueException ex, WebRequest request) {
         logger.error(ex.getMessage());
         return handleExceptionInternal(
@@ -66,7 +74,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler({NotExistDaoException.class})
+    @ExceptionHandler({
+            NotExistDaoException.class
+    })
     public ResponseEntity<Object> entityNotFound(NotExistDaoException ex, WebRequest request) {
         logger.error(ex.getMessage());
         return handleExceptionInternal(
