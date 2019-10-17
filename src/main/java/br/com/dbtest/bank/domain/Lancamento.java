@@ -46,9 +46,6 @@ public class Lancamento implements Serializable {
     @Column( nullable = false)
     private Double valor;
 
-    @Column( nullable = false)
-    private Double limite;
-
     @Pattern(regexp = "\\w{0,15}")
     @Column(nullable = false, length = 15)
     private String tipo;
@@ -106,13 +103,6 @@ public class Lancamento implements Serializable {
         this.contaDest = contaDest;
     }
 
-    public Double getLimite() {
-        return limite;
-    }
-
-    public void setLimite(Double limite) {
-        this.limite = limite;
-    }
 
     public String getTipo() {
         return tipo;
@@ -147,7 +137,6 @@ public class Lancamento implements Serializable {
                 ", agenciaDest=" + agenciaDest +
                 ", contaDest=" + contaDest +
                 ", valor=" + valor +
-                ", limite=" + limite +
                 ", tipo='" + tipo + '\'' +
                 ", date=" + date +
                 ", status='" + status + '\'' +
@@ -165,7 +154,6 @@ public class Lancamento implements Serializable {
                 contaDest == that.contaDest &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(valor, that.valor) &&
-                Objects.equals(limite, that.limite) &&
                 Objects.equals(tipo, that.tipo) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(status, that.status);
@@ -173,6 +161,6 @@ public class Lancamento implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, agenciaOrig, contaOrig, agenciaDest, contaDest, valor, limite, tipo, date, status);
+        return Objects.hash(id, agenciaOrig, contaOrig, agenciaDest, contaDest, valor, tipo, date, status);
     }
 }

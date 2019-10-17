@@ -2,7 +2,6 @@ package br.com.dbtest.bank;
 
 
 import br.com.dbtest.bank.resource.rest.LancamentoRestController;
-import br.com.dbtest.bank.service.ContaServiceImpl;
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
@@ -19,7 +18,6 @@ public class TestRequest extends LancamentoRestController {
     private static final Logger logger = LogManager.getLogger(TestRequest.class);
 
     private static TestResourceRequest f = new TestResourceRequest();
-    ContaServiceImpl s = new ContaServiceImpl();
 
     @BeforeClass
     public static void init() {

@@ -32,6 +32,8 @@ public class LancamentoServiceImpl implements LancamentoService {
         validateAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig());
         validateAccount(lancamento.getAgenciaDest(), lancamento.getContaDest());
         veficaSaldo(contaDao.findAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig()), lancamento.getValor());
+
+
         return execTrans(lancamento);
     }
 
@@ -54,8 +56,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 
     private Lancamento execTrans(Lancamento lancamento) {
         try {
-            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig()), -lancamento.getLimite());
-            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaDest(), lancamento.getContaDest()), +lancamento.getLimite());
+            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaOrig(), lancamento.getContaOrig()), -lancamento.getValor());
+            contaDao.tranfere(contaDao.findAccount(lancamento.getAgenciaDest(), lancamento.getContaDest()), +lancamento.getValor());
             lancamentoDao.save(lancamento);
             Lancamento l = lancamentoDao.findLancamento(lancamento.getId());
             return l;

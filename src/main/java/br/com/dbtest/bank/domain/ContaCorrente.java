@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,6 +30,7 @@ public class ContaCorrente implements Serializable {
     @Column( nullable = false)
     private int conta;
 
+
     @Column( nullable = false)
     private Double saldo;
 
@@ -37,6 +39,19 @@ public class ContaCorrente implements Serializable {
 
     @Column( nullable = false)
     private String tipo;
+
+    @Column(nullable = true)
+    // @OneToMany( fetch=FetchType.EAGER, cascade = ALL,targetEntity=Lancamento.class )
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Lancamento.class)
+    private List Lancamento;
+
+    public List getLancamento() {
+        return Lancamento;
+    }
+
+    public void setLancamento(List lancamento) {
+        Lancamento = lancamento;
+    }
 
     public Long getId() {
         return id;
@@ -85,6 +100,7 @@ public class ContaCorrente implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
 
     @Override
     public boolean equals(Object o) {

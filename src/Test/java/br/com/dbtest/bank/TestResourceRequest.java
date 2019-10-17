@@ -37,7 +37,6 @@ public class TestResourceRequest implements Serializable {
             "    \"agenciaDest\":12301,\n" +
             "    \"contaDest\":123000123,\n" +
             "    \"valor\": 100.00,\n" +
-            "    \"limite\": 100.00,\n" +
             "    \"tipo\": \"corrente\",\n" +
             "    \"date\": \"2019101000123\",\n" +
             "    \"status\": \"ok\"\n" +
@@ -48,7 +47,6 @@ public class TestResourceRequest implements Serializable {
             "    \"agenciaDest\":22301,\n" +
             "    \"contaDest\":223000123,\n" +
             "    \"valor\": 100.00,\n" +
-            "    \"limite\": 100.00,\n" +
             "    \"tipo\": \"corrente\",\n" +
             "    \"date\": \"2019101000123\",\n" +
             "    \"status\": \"ok\"\n" +
@@ -60,7 +58,6 @@ public class TestResourceRequest implements Serializable {
             "    \"agenciaDest\":22301,\n" +
             "    \"contaDest\":223000123,\n" +
             "    \"valor\": 100000000000.00,\n" +
-            "    \"limite\": 100.00,\n" +
             "    \"tipo\": \"corrente\",\n" +
             "    \"date\": \"2019101000123\",\n" +
             "    \"status\": \"ok\"\n" +
@@ -73,7 +70,6 @@ public class TestResourceRequest implements Serializable {
             "    \"agenciaDest\":22301,\n" +
             "    \"contaDest\":223000123,\n" +
             "    \"valor\": 100.00,\n" +
-            "    \"limite\": 100.00,\n" +
             "    \"tipo\": \"corrente\",\n" +
             "    \"date\": \"2019101000123\",\n" +
             "    \"status\": \"ok\"\n" +
@@ -86,7 +82,6 @@ public class TestResourceRequest implements Serializable {
             "    \"agenciaDest\":22301,\n" +
             "    \"contaDest\":223000123,\n" +
             "    \"valor\": 100.00,\n" +
-            "    \"limite\": 100.00,\n" +
             "    \"tipo\": \"corrente\",\n" +
             "    \"date\": \"2019101000123\",\n" +
             "    \"status\": \"ok\"\n" +
@@ -98,7 +93,6 @@ public class TestResourceRequest implements Serializable {
             "    \"agenciaDest\":22301,\n" +
             "    \"contaDest\":223000123,\n" +
             "    \"valor\": 100.00,\n" +
-            "    \"limite\": 100.00,\n" +
             "    \"tipo\": \"corrente\",\n" +
             "    \"date\": \"2019101000123\",\n" +
             "    \"status\": \"ok\"\n" +
