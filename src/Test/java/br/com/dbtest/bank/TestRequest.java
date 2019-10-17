@@ -2,9 +2,12 @@ package br.com.dbtest.bank;
 
 
 import br.com.dbtest.bank.resource.rest.LancamentoRestController;
+import br.com.dbtest.bank.service.ContaServiceImpl;
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -13,142 +16,94 @@ import static io.restassured.RestAssured.given;
 
 public class TestRequest extends LancamentoRestController {
 
-    private static TestFiles f = new TestFiles();
+    private static final Logger logger = LogManager.getLogger(TestRequest.class);
 
-      @BeforeClass
-      public static void init()   {
-          RestAssured.baseURI = "http://localhost";
-          RestAssured.port = 8080;
-      }
+    private static TestResourceRequest f = new TestResourceRequest();
+    ContaServiceImpl s = new ContaServiceImpl();
 
     @BeforeClass
-    public static void postJsonPayloadSend() {
-
-        InsertAccountPost(f.getConta1());
-        InsertAccountPost(f.getConta2());
+    public static void init() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = 8080;
     }
 
-    public static Response InsertAccountPost(String payload) {
-        RestAssured.defaultParser = Parser.JSON;
-        return    given().contentType("application/json")
-                        .body(payload)
-                        .post("/rest/transfs")
-                              .then()
-                              .extract()
-                              .response()
-                        ;
+    @BeforeClass
+    public static void InsertTestResource() {
+
+        PostInsert(f.getConta1());
+        PostInsert(f.getConta2());
+        PostInsert(TestResourceRequest.getConta3());
     }
 
-    public static Response TestTransSucess(String payload) {
+    public static Response PostTransf(String payload, int status) {
         RestAssured.defaultParser = Parser.JSON;
         return
                 given().contentType("application/json")
                         .body(payload)
                         .post("/rest/lanc")
                         .then()
-                        .statusCode(201)
+                        .statusCode(status)
                         .extract()
-                        .response()
-                ;
+                        .response();
     }
 
-    public static Response TestTransOverLimit(String payload) {
+    public static Response PostInsert(String payload) {
+        RestAssured.defaultParser = Parser.JSON;
+        return given().contentType("application/json")
+                .body(payload)
+                .post("/rest/transfs")
+                .then()
+                .extract()
+                .response();
+    }
+
+    public static Response PostTransfUrl(String payload, int status, String URL) {
         RestAssured.defaultParser = Parser.JSON;
         return
                 given().contentType("application/json")
                         .body(payload)
-                        .post("/rest/lanc")
+                        .post(URL)
                         .then()
-                        .statusCode(500)
+                        .statusCode(status)
                         .extract()
-                        .response()
-                ;
+                        .response();
     }
 
+    @Test
+    public void TestTransSucess() {
+        PostTransf(f.getTransfOk(), 201);
+    }
+
+    @Test
+    public void TestSameOrigin() {
+        PostTransf(TestResourceRequest.getTransfSameOrigin(), 500);
+    }
+
+    @Test
+    public void TestInvalidType() {
+        PostTransf(f.getInvalidType(), 400);
+    }
+
+    @Test
+    public void TestTransfOverLimit() {
+        PostTransf(f.getTransfOver(), 500);
+    }
+
+    @Test
+    public void TestFieldBasent() {
+        PostTransf(f.getFieldAbsent(), 500);
+    }
+
+    @Test
+    public void TestNoEntityFoundForQuery() {
+        PostTransf(f.getNoEntityFound(), 500);
+    }
 
     @Test
     @Category(br.com.dbtest.bank.resource.rest.LancamentoRestController.class)
-    public void postJsonPayloadSend2() {
-        TestTransSucess(f.getTransf1());
-
-    }
-
-    @Test
-    public void PostTrasfOver() {
-        TestTransOverLimit(f.getTransfOver());
+    public void TestValidateTransfUrl() {
+        PostTransfUrl(f.getUrlTransfError(), 404, f.getUrlTransfError());
     }
 
 
-    //validar agencia quant de digito
-    // validar padrao de data
-    // validar letra na agencia
-    // add o campo a translação na conta
-    // teste com json mau formatado trans
-    // test com campo nulo
-    //
-
-
-
-
-
-
-    //   @Test
-//    public void TestTransSucess() {
-    //       this.TestTransSucess(payload3);
-    //  }
-//        @DisplayName("Test 1")
-//        @Test
-//        public void  testGet() {
-//           // RestAssured.defaultParser();
-//            System.out.println("Test 1");
-//            RestAssured.defaultParser = Parser.JSON;
-////            System.out.println(given().contentType("application/json")
-////                    .get("/rest/transfs").getBody().prettyPrint());
-//
-////              given().contentType("application/json")
-////                      .get("/rest/transfs")
-////                    .then()
-////                    .body("$['conta']", hasItems('1')) ;
-//
-//              given().contentType("application/json")
-//                      .param("agenciaOrig", "1")
-//                      .param("contaOrig", "1")
-//                      .param("agenciaDest", "2")
-//                      .param("contaDest", "2")
-//                      .param("valor", "100")
-//                      .param("tipo", "corrente")
-//                      .get("/rest/transfs/findaccount")
-//                    .then()
-//                    .body("conta", equalTo(1)) ;
-//
-//
-//             System.out.println(
-//                     given().contentType("application/json")
-//                             .param("agenciaOrig", "1")
-//                             .param("contaOrig", "1")
-//                             .param("agenciaDest", "2")
-//                             .param("contaDest", "2")
-//                             .param("valor", "100")
-//                             .param("tipo", "corrente")
-//                             .get("/rest/transfs/findaccount").getBody().prettyPrint()
-//
-//                               );
-
-//            System.out.println(
-//                    get("/rest/transfs")
-                   // .body("$", find(1, 2, 3))
- //                   );
-
-//            System.out.println(
-//                   "2"
-//            );
-//            System.out.println(
-//                    given().body("{\"agencia\" : \"4\",\"conta\" : \"3\",\"saldo\" : \"2000\",\"limite\" : \"100\",\"tipo\" : \"corrente\"}")
-//                    .post("/rest/transfs")
-//
-//            );
-//
-//            given().body("{\"agencia\" : \"4\",\"conta\" : \"3\",\"saldo\" : \"2000\",\"limite\" : \"100\",\"tipo\" : \"corrente\"}")
-//                    .post("/rest/transfs");
-
-        }
+}

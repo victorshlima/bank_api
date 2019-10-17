@@ -27,20 +27,20 @@ public class Lancamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Pattern(regexp = "\\d{5}")
-    @Column(nullable = false, length = 5)
+    // @Pattern(regexp = "\\d{0,5}")
+    @Column(nullable = false, length = 6)
     private int agenciaOrig;
 
-    @Pattern(regexp = "\\d{9}")
-    @Column(nullable = false, length = 9)
+    //   @Pattern(regexp = "\\d{0,9}")
+    @Column(nullable = false, length = 10)
     private int contaOrig;
 
-    @Pattern(regexp = "\\d{5}")
-    @Column(nullable = false, length = 5)
+    //  @Pattern(regexp = "\\d{0,5}")
+    @Column(nullable = false, length = 6)
     private int agenciaDest;
 
-    @Pattern(regexp = "\\d{9}")
-    @Column(nullable = false, length = 9)
+    //  @Pattern( regexp= "\\d{0,9}")
+    @Column(nullable = false, length = 10)
     private int contaDest;
 
     @Column( nullable = false)
@@ -105,7 +105,6 @@ public class Lancamento implements Serializable {
     public void setContaDest(int contaDest) {
         this.contaDest = contaDest;
     }
-
 
     public Double getLimite() {
         return limite;
