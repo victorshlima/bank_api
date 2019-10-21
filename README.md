@@ -200,7 +200,7 @@ Exemple result
 ## Roadmap
 
 
-Improvo security with (Spring security)
+Improve security with (Spring security)
 
 Add Lombook to simplify getters
 
